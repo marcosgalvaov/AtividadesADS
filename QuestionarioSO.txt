@@ -1,0 +1,200 @@
+Nome: Marcos Guilherme Galvão Vilas Boas
+Turma: ADS 1 – 2026/1
+
+
+Questionário de Revisão: Sistemas Operacionais e Linux
+Conceitos Básicos e Kernel
+
+1.	Defina o que é um Sistema Operacional e qual o seu principal objetivo.
+R: É o software mais importante dentro do sistema de um computador, ele vai gerenciar o hardware e outros softwares do sistema, permitindo que eles funcionem entre si. O seu principal objetivo é ser o intermediário entre o usuário e o computador, permitindo que o usuário possa controlar o sistema.
+
+
+2.	Explique a diferença fundamental entre o modo de usuário e o modo de núcleo (kernel mode).
+R:  O modo de usuário é um ambiente superficial na máquina, ou seja, consegue rodar softwares, porém sem acesso direto ao hardware. Em caso de falhas, apenas o aplicativo aberto deve ser fechado. Por outro lado, o modo de núcleo permite acesso total do hardware, memória e CPU. Em caso de erros, todo o sistema deve ser fechado.
+
+
+3.	O que é o Kernel em um Sistema Operacional?
+R: Kernel é o núcleo do Sistema Operacional, conectando o software e o hardware. Ele gerencia recursos e atende aos chamados do usuário, controlando como o hardware deve funcionar para atender aos comandos solicitados. Ele garante segurança e eficiência, uma vez que controla o que pode ser feito e o que não deve ser feito pelo sistema.
+
+
+4.	Quais são as principais funções que o Kernel desempenha em um computador?
+R: O Kernel permite o gerenciamento de processos, controlando o time sharing e quais tarefas devem ser realizadas. Além disso, faz conexão entre o sistema operacional e os componentes do hardware, permitindo o funcionamento de forma eficiente. Também atende às chamadas de sistema feitas pelos softwares do usuário, fornecendo acesso ao hardware de forma segura sem colocar em risco a máquina.
+
+
+5.	Defina o conceito de Chamadas de Sistema (System Calls) e explique por que elas são essenciais.
+R: São ações pré-definidas controladas pelo Kernel para acessar o hardware da máquina. É essencial para impedir que o usuário realize comandos que podem colocar a segurança da máquina em risco.
+
+
+6.	Diferencie a arquitetura de Kernel Monolítico da arquitetura de Microkernel.
+R: O Kernel Monolítico costuma colocar todas as funções principais do sistema operacional dentro do Kernel, apresentando melhor desempenho, uma vez que faça menos mudanças de contexto. Já o Microkernel, costuma colocar apenas as funções mais importantes dentro do Kernel e as outras funções no modo de usuário, sem acesso direto ao hardware, o que garante um processo mais seguro comparado ao Monolítico.
+
+
+7.	Explique o que significa a abstração de hardware realizada pelo Sistema Operacional.
+R: A abstração de hardware permite que o usuário possa usar a máquina sem ter conhecimento do funcionamento aprofundado do sistema, facilitando a usabilidade da máquina. Isso é importante para que mais pessoas possam utilizar o sistema, sem que precisem de um longo conhecimento prévio.
+
+
+8.	Fale sobre a importância do Sistema Operacional no gerenciamento concorrente de recursos (como CPU e memória).
+R: O SO é essencial para a eficiência da máquina como um todo. Ele permite o controle do compartilhamento da CPU, realizando o Time Sharing e gerenciando quando e quais processos devem ser realizados na CPU, reduzindo os processos que tomam conta do sistema. O SO também organiza qual parte da memória cada programa deve acessar, sem que atrapalhe outros processos e acesse a memória de outro programa. Em geral, o SO organiza o sistema de forma que funcione em harmonia, melhorando o desempenho e estabilidade da máquina.
+
+
+
+- PROCESSOS E ESCALONAMENTO
+
+9.	Defina o que é um Processo no contexto de Sistemas Operacionais.
+R: É uma entidade dinâmica, ou seja, uma tarefa/programa em execução. O sistema é multitarefa, sendo essencial gerenciar vários processos ao mesmo tempo.
+
+
+10.	Qual a diferença conceitual e prática entre um programa e um processo?
+R: Um programa é uma entidade passiva, ou seja, um conjunto de instruções armazenados e parados no disco. Enquanto um processo é uma entidade dinâmica, ou seja, um programa em execução.
+
+
+11.	Explique os três estados básicos em que um processo pode se encontrar (Pronto, Executando, Bloqueado/Espera).
+R: Pronto – O processo já realizou sua função.
+Executando – O processo está sendo executado.
+Bloqueado/espera – Ainda não chegou na vez desse processo ser executado, ele está na fila de espera do Time Sharing.
+
+
+12.	O que é o Bloco de Controle de Processo e quais tipos de informações ele armazena?
+R: O Bloco de Controle de Processo é uma estrutura que armazena as informações essenciais no gerenciamento de um processo, isso permite que ele controle os recursos de forma organizada e realize mais de uma tarefa. Ele armazena informações como o contexto, PID do processo, estado do processo, contador de programa, registradores da CPU e componentes de entrada e saída. 
+
+
+13.	Fale sobre o conceito de Troca de Contexto em processos
+R: É o mecanismo do qual um processo é interrompido e passa a executar outro, armazenando e restaurando as informações necessárias para que os dois possam voltar a executar depois. Ou seja, é a execução concorrente de múltiplos processos em uma única CPU.
+
+
+14.	Defina o que é o escalonamento de processos e qual o papel do escalonador.
+R: Escalonamento é quando o sistema define um tempo igual de execução para todos os processos, uma vez que eles estejam competindo para serem executados. Quando a fatia de tempo de um processo acaba ele retorna ao final da fila, ficando em loop até que morra. Esse conceito é essencial para evitar um processo que tome conta do sistema.
+
+
+15.	O que são processos zumbis (zombie processes) e processos órfãos no ambiente Linux?
+R: O processo zumbi é um processo que já realizou sua função, porém não foi atualizado pelo seu processo pai, continuando ativo na tabela de processos. O processo órfão é quando o processo perde conexão com o processo pai, que provavelmente já morreu, continuando em execução.
+
+
+
+- CRIAÇÃO DE PROCESSOS (FORK) E THREADS
+
+16.	Explique o funcionamento e o propósito da chamada de sistema fork() no Linux.
+R: O sistema fork gera dois processos, duplicando o processo e contexto. Ou seja, cria um processo filho praticamente igual ao processo pai. 
+
+
+17.	Após a execução de um fork(), o que os processos pai e filho compartilham?
+R: Ambos compartilham os mesmos descritores de arquivo, o código do programa e os recursos do sistema. Porém, não compartilham os mesmos espaços de memória e contextos de execução.
+
+
+18.	Como o processo pai pode identificar o processo filho logo após a chamada do fork()?
+R: Ele pode identificar o processo filho através do valor de retorno da chamada fork, que corresponde ao PID do processo filho.
+
+
+19.	Defina o que é uma Thread (linha de execução).
+R: Thread é a menor unidade de processamento que um sistema operacional gerencia, ele permite que processos dividam tarefas para rodar em paralelo ou de forma assíncrona.
+
+
+20.	Quais as principais diferenças estruturais entre um processo tradicional e uma thread?
+R: Um processo tradicional funciona de forma independente, com recursos próprios. Enquanto uma thread compartilha recursos com outras threads e divide a memória do processo. As threads apresentam um desempenho melhor, porém menos seguro, uma vez que um erro pode afetar a todas as threads.
+
+
+21.	Explique os benefícios de se utilizar uma arquitetura multithread em vez de criar múltiplos processos para uma mesma aplicação.
+R: Uma vez que os processos dividem as tarefas para rodar em paralelo ou de forma assíncrona, o sistema carrega mais rápido e permite um processamento mais leve.
+
+
+22.	O que significa dizer que as threads de um mesmo processo compartilham o mesmo espaço de endereçamento?
+R: Significa que todas acessam a mesma memória, permitindo que se comuniquem de forma direta, porém exige que estejam sincronizadas para evitar conflitos.
+
+
+23.	Fale sobre a diferença entre threads em nível de usuário e threads em nível de kernel.
+R: Threads em nível de usuário funcionam a partir do próprio programa em execução, não exigindo chamadas do sistema, o que permite um melhor desempenho. Já as threads em nível de kernel funcionam a partir do SO, cada uma é reconhecida pelo kernel, o que permite que funcionem em paralelo, porém exige mais processamento.
+
+
+- COMANDOS DE SHELL Linux
+
+24.	Defina o que é o Shell e qual o seu papel no sistema operacional Linux.
+R: Shell é o interpretador de comandos do Linux, ou seja, é a terminal que interpreta e executa comandos, permitindo a conexão entre o usuário e o sistema operacional.
+
+
+25.	Explique a finalidade do comando ls e cite duas opções (flags) úteis que podem ser usadas com ele.
+R: O comando ls permite a verificação do diretório atual, listando o conteúdo presente nele. A flag ls -l mostra informações detalhadas, como permissões, tamanho e dono. Já a flag ls –t organiza os arquivos de acordo com a data de modificação, listando os arquivos novos em primeiro.
+
+
+26.	Para que servem os comandos pwd e cd na navegação de diretórios? Dê exemplos.
+R: O comando pwd encontra e imprime o caminho do diretório atual do usuário. Já o cd é utilizado para navegar entre diretórios, mudando de um para outro de acordo com o comando do usuário. Exemplo: cd / (vai para a root), cd aulas (vai para o diretório de aulas).
+
+
+27.	Diferencie as aplicações dos comandos cp, mv e rm.
+R: cp = Realiza uma cópia do arquivo.
+mv = Move arquivos ou renomeia o nome deles.
+rm = Remove arquivos.
+
+
+28.	Como você faria para visualizar o conteúdo de um arquivo de texto diretamente no terminal? (Fale sobre cat).
+R: Utilizaria o comando cat, já que ele permite a visualização rápida do conteúdo de arquivos de texto no terminal. Exemplo: cat arquivo.txt
+
+
+29.	Qual a função do comando grep e por que ele é tão utilizado na administração de sistemas?
+R: O comando grep busca padrões de textos em arquivos ou saídas de comandos. Ele é muito utilizado para a administração de sistemas já que sua função permite uma análise mais rápida em logs e filtragem de informações, além de facilitar a busca por erros.
+
+
+
+- PERMISSÕES DE ARQUIVOS E DIRETÓRIOS
+
+30.	Explique como funciona o sistema de classes de usuários no Linux em relação a um arquivo: quem são o Dono (User), Grupo (Group) e Outros (Others)?
+R: Dono (User): É o dono do arquivo, tem controle principal sobre ele e possui mais permissões.
+Grupo (Group): O arquivo está associado a um grupo específico, do qual um conjunto de usuários faz parte. Todos do grupo possuem as mesmas permissões.
+Outros (Others): Outros usuários que não sejam o dono nem fazem parte do grupo específico. Costuma ter menos permissões sobre o arquivo.
+
+
+31.	Defina o que significam as permissões de Leitura (r), Escrita (w) e Execução (x) quando aplicadas a um arquivo.
+R: r: Permite visualizar o conteúdo do arquivo.
+w: Permite modificar o conteúdo do arquivo.
+x: Permite executar o arquivo como um programa.
+
+
+32.	O que muda no significado das permissões de Leitura (r), Escrita (w) e Execução (x) quando aplicadas a um diretório?
+R: r: Listar o conteúdo do diretório, como os arquivos presentes nele.
+w: Modificar arquivos dentro do diretório, como criar, remover ou renomear.
+x: Acessar arquivos dentro do diretório.
+
+
+33.	Explique a representação octal (numérica) de permissões no Linux. O que significa, por exemplo, a permissão 755 e a 644?
+R: É o mecanismo para representar as permissões de dono, grupo e outros, utilizando números de 0 a 7. Cada permissão é representada por três dígitos e cada dígito é a soma das permissões daquela classe.
+755:  rwx | r-x | r-x (Permite leitura, escrita e execução ao dono, enquanto ao grupo e outros apenas leitura e execução)
+644: rw- | r-- | r-x (Permite leitura e escrita ao dono, enquanto ao grupo e outros apenas a leitura) 
+
+
+34.	Qual a função do comando chmod? Mostre um exemplo 
+R: A função chmod altera as permissões do arquivo, sendo muito importante para a segurança de um sistema. Exemplo: chmod 760 script01.sh
+
+
+
+- SHELL SCRIPT
+
+35.	Defina o que é um Shell Script e cite um cenário real onde a sua utilização seja vantajosa.
+R: Shell Script é a linguagem de programação usada em terminais do Linux, seu papel é vantajoso no processo de automatizar tarefas/processos.
+
+
+36.	Qual é a finalidade da linha conhecida como "shebang" (ex: #!/bin/bash) no início de um script?
+R: Essa linha é o interpretador de comandos do script, ela define qual interpretador deve ser utilizado para a execução desse script.
+
+
+37.	Como declaramos variáveis e como acessamos os valores armazenados nelas dentro de um script Bash?
+R: As variáveis são declaradas utilizando o sinal de igual e sem espaço entre as palavras, seus valores são acessados utilizando o sinal de cifrão antes do nome da variável. Exemplos: user=”Feichas” | $user
+
+
+38.	Explique como um script pode receber argumentos ou parâmetros passados via linha de comando pelo usuário (uso do $1, $2, etc.).
+R: O script solicita os valores ao usuário e declara esses valores nas variáveis, cada variável posicional representa um argumento passado pelo usuário. Pode ser feito através do read ou declarando no final do comando echo.
+
+
+39.	Fale sobre como construir uma estrutura condicional básica (if/then/else) em um script para testar se um arquivo existe.
+R: if: Verifica se uma condição específica ocorre.
+then: Caso o if seja verdade, executa algum comando.
+else: Se o if não for verdade, executa outro comando.
+-f: Verifica se é um arquivo comum.
+fi: Fecha o bloco.
+
+Exemplo:
+#!/bin/bash
+
+if [ -f “teste.txt” ] ; then
+    echo “O arquivo foi encontrado!”
+else
+    echo “O arquivo não foi encontrado”
+fi
