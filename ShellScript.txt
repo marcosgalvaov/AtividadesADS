@@ -1,0 +1,238 @@
+NOME: Marcos Guilherme Galvão Vilas Boas
+TURMA: ADS 1
+
+
+LISTA - SHELL SCRIPT
+
+
+#EXERCÍCIO 1
+
+#!/bin/bash
+
+clear
+
+read -p "Informe o valor 1: " n1
+read -p "Informe o valor 2: " n2
+
+echo "1 - Ler valores"
+echo "2 - Somar"
+echo "3 - Subtrair"
+echo "4 - Multiplicar"
+echo "5 - Dividir"
+echo "Informe a opção desejada"
+read op
+
+case $op in
+	1)
+		echo "Valor 1: $n1"
+		echo "Valor 2: $n2"
+		;;	
+	2)
+		soma=$(expr $n1 + $n2)
+		echo "Soma = $soma"
+		;;
+	3)
+		sub=$(expr $n1 - $n2)
+		echo "Subtração = $sub"
+		;;
+	4)
+		mul=$(expr $n1 \* $n2)
+		echo "Multiplicação = $mul"
+		;;
+	5)
+		div=$(echo "scale=2; $n1 / $n2" | bc)
+		echo "Divisão = $div"
+		;;
+	*)
+		echo "Opção inválida"
+esac
+
+
+
+
+#EXERCÍCIO 2
+
+
+#!/bin/bash 
+
+clear 
+
+read -p "Arquivo a ser removido: " arq 
+
+if [ -e "$arq" ] ; then      
+	rm $arq      
+	echo "O arquivo $arq foi removido com sucesso!" 
+
+else       
+	echo "O arquivo não foi encontrado" 
+
+fi
+
+
+
+
+#EXERCÍCIO 3
+
+
+#!/bin/bash
+
+clear
+
+read -p "Arquivo a ser renomeado: " arq
+read -p "Novo nome do arquivo: " novarq
+
+if [ -e "$arq" ] ; then
+	mv "$arq" "$novarq"
+	echo "O arquivo $novarq foi renomeado!"
+
+else
+	echo "O arquivo não foi encontrado"
+
+fi
+
+
+
+#EXERCÍCIO 4
+
+#!/bin/bash
+
+clear
+
+echo "O diretório atual é: "
+pwd
+
+read -p "Arquivo a ser movido: " arq
+read -p "Diretório de destino: " dire
+home=$HOME
+
+
+if [ -e "$arq" ] ; then
+	if [ -e "$home/$dire" ] ; then
+		mv "$arq" $home/$dire
+		echo "O arquivo $arq foi movido para $dire com sucesso!"
+	else
+		echo "O diretório não foi encontrado"
+
+	fi
+else
+	echo "O arquivo não foi encontrado."
+
+fi	
+
+
+
+#EXERCÍCIO 5
+
+#!/bin/bash
+
+clear
+
+read -p "Nome do usuário: " usua
+
+if id "$usua" > /dev/null 2>&1 ; then
+	echo "O usuário $usua existe no sistema!
+else
+	echo "O usuário $usua NÃO foi encontrado no sistema."
+fi
+
+
+
+
+
+#EXERCÍCIO 6
+
+#!/bin/bash
+
+clear
+
+read -p "Informe a palavra ou frase: " word
+read -p "Informe o arquivo: " arq
+
+if [ -e "$arq" ] ; then
+	grep -i "$word" "$arq"
+else
+	echo "O arquivo $arq não foi encontrado."
+fi
+
+
+
+#EXERCÍCIO 7
+
+#!/bin/bash
+
+clear
+
+echo "Usuário logado: $(whoami)"
+echo "Diretório do usuário (HOME): $HOME"
+echo "Espaço utilizado: " du -sh "$HOME"
+
+
+
+
+#EXERCÍCIO 8
+
+#!/bin/bash
+
+clear
+
+echo "Lista de usuários no sistema: "
+who
+
+
+
+
+#EXERCÍCIO 9
+
+#!/bin/bash
+
+clear
+
+read -p "Arquivo: " arq
+read -p "Permissões novas: " perm
+
+if [ -e "$arq" ] ; then
+	chmod $perm "$arq"
+	echo "As permissões do arquivo "$arq" foram alteradas!"
+
+else
+	echo "Arquivo não foi encontrado"
+
+fi
+
+
+
+#EXERCÍCIO 10
+
+#!/bin/bash
+
+clear
+
+read -p "Deseja ver todos os processos em execução? [S/N]" resp
+
+if [ $resp == "S" ] ; then
+	ps -
+	echo "Todos os processos foram listados!"
+else
+	echo "Os processos não foram listados"
+fi
+
+
+
+
+
+#EXERCÍCIO 11
+
+#!/bin/bash
+
+clear
+
+read -p "PID do processo a ser finalizado: " pid
+
+if ps -p "$pid" > /dev/null ; then
+	kill -9 "$pid"
+	echo "O processo $pid foi finalizado!"
+
+else
+	echo "O processo não foi encontrado"
+
+fi
